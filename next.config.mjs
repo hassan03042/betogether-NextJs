@@ -5,6 +5,10 @@ const nextConfig = {
             {hostname : "img.freepik.com"},
             {hostname : "cdn-icons-png.flaticon.com"}, 
             {hostname : "encrypted-tbn0.gstatic.com"}, 
+            {hostname : "www.southernliving.com"}, 
+            {hostname : "marketplace.canva.com"}, 
+            {hostname : "encrypted-tbn0.gstatic.com"}, 
+            {hostname : "png.pngtree.com"}, 
         ]
     }
 };

@@ -10,6 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { AddCategories } from "@/components/AddCategories/AddCategory";
 
 const categories = [
   {
@@ -39,7 +40,7 @@ export default function Category() {
     <div className="min-h-screen container mx-auto">
       <div className="flex justify-between">
         <h1>Categories</h1>
-        <Button variant="outline">Add Category</Button>
+        <AddCategories />
 
       </div>
 

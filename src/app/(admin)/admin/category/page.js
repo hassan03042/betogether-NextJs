@@ -38,8 +38,8 @@ const categories = [
 export default function Category() {
   return (
     <div className="min-h-screen container mx-auto">
-      <div className="flex justify-between">
-        <h1>Categories</h1>
+      <div className="flex justify-between items-center my-4">
+      <h1 className="font-bold text-xl">Category</h1>
         <AddCategories />
 
       </div>

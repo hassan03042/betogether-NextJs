@@ -40,6 +40,9 @@ const users = [
 export default function Users() {
   return (
     <div className="min-h-screen container mx-auto">
+       <div className="flex justify-between items-center my-4">
+       <h1 className="font-bold text-xl">Users</h1>
+       </div>
       <Table>
         <TableCaption>A list of your recent users.</TableCaption>
         <TableHeader>

@@ -10,7 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { AddCategories } from "@/components/AddCategories/AddCategory";
+import { AddSubCategories } from "@/components/AddSubCategories/AddSubCategories";
 
 const subCategories = [
   {
@@ -33,9 +33,9 @@ const subCategories = [
 export default function Category() {
   return (
     <div className="min-h-screen container mx-auto">
-      <div className="flex justify-between">
-        <h1>Sub Categories</h1>
-        <AddCategories />
+      <div className="flex justify-between items-center my-4">
+        <h1 className="font-bold text-xl">Sub Categories</h1>
+        <AddSubCategories />
 
       </div>
 

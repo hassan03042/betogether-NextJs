@@ -4,7 +4,13 @@ import { UserModal } from "@/lib/models/Users";
 export async function GET(request) {
   await connectDB();
   const users = await UserModal.find();
-  return Response.json(users, { status: 200 });
+  return Response.json(
+    {
+      msg: "Users Fetched Successfully",
+      users,
+    },
+    { status: 200 }
+  );
 }
 
 export async function POST(request) {
@@ -13,7 +19,13 @@ export async function POST(request) {
   let newUser = new UserModal(obj);
   await newUser.save();
 
-  return Response.json(newUser, { status: 201 });
+  return Response.json(
+    {
+      msg: "Users Added Successfully",
+      user: newUser,
+    },
+    { status: 201 }
+  );
 }
 
 export async function PUT(request) {}

@@ -7,7 +7,7 @@ export async function GET(request) {
   return Response.json(
     {
       msg: "Category Fetched Successfully",
-      category,
+      categories,
     },
     { status: 200 }
   );
@@ -15,6 +15,8 @@ export async function GET(request) {
 
 export async function POST(request) {
   await connectDB();
+  console.log(connectDB);
+  
   const obj = await request.json();
   let newCategory = new CategoryModal(obj);
   await newCategory.save();

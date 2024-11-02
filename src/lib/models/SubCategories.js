@@ -7,7 +7,7 @@ const subcategoriesSchema = new Schema({
   thumbnail:  {type : String, required: true},
   category: {
     type: mongoose.Types.ObjectId,
-    ref: "Categories",
+    ref: "Category",
     required: true,
   },
 });

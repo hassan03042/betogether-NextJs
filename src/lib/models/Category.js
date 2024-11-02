@@ -7,4 +7,4 @@ const categorySchema = new Schema({
   thumbnail: { type: String, required: true },
 });
 
-export const CategoryModal = mongoose.models.Category || mongoose.model("Category", categorySchema);
+export const CategoryModal = mongoose.models.Categories || mongoose.model("Categories", categorySchema);

@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import React, { useState } from "react"
+import React, { useState } from "react";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 // import { useMediaQuery } from "@/hooks/use-media-query"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -12,7 +12,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
 import {
   Drawer,
   DrawerClose,
@@ -22,13 +22,15 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "@/components/ui/drawer"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+} from "@/components/ui/drawer";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 export function AddCategories() {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
   const isDesktop = true;
+
+
 
   if (isDesktop) {
     return (
@@ -46,7 +48,7 @@ export function AddCategories() {
           <ProfileForm />
         </DialogContent>
       </Dialog>
-    )
+    );
   }
 
   return (
@@ -69,25 +71,33 @@ export function AddCategories() {
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
-  )
+  );
 }
 
 function ProfileForm({ className }) {
+  const handleAddCategory = (formData)=>{
+    console.log("formData", formData);
+    const file = formData.get('thumbnail');
+    console.log("formData", file);
+
+      }
   return (
-    <form className={cn("grid items-start gap-4", className)}>
+    <form
+    action={handleAddCategory}
+    className={cn("grid items-start gap-4", className)}>
       <div className="grid gap-2">
         <Label htmlFor="text">Title</Label>
-        <Input type="text" id="text" defaultValue="Sports" />
+        <Input required type="text" name="text" id="text" placeholder="Sports" />
       </div>
       <div className="grid gap-2">
         <Label htmlFor="description">Description</Label>
-        <Input id="description" defaultValue="About" />
+        <Input required id="description" name="description" placeholder="About" />
       </div>
       <div className="grid gap-2">
         <Label htmlFor="thumbnail">Thumbnail</Label>
-        <Input id="thumbnail" defaultValue="Thumbnail" />
+        <Input name="thumbnail" required type="file"/>
       </div>
       <Button type="submit">Save changes</Button>
     </form>
-  )
+  );
 }

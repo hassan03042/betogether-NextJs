@@ -32,18 +32,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       const userFromDB = await handleUser(token);
       console.log("userFromDB", userFromDB);
 
-      if (user) {
-        // User is available during sign-in
-        token._id = userFromDB._id;
-        token.role = userFromDB.role;
-      }
+      // if (user) {
+      // User is available during sign-in
+      token._id = userFromDB._id;
+      token.role = userFromDB.role;
+      // }
       return token;
     },
     session({ session, token }) {
       console.log("session data", session);
       session.user.id = token.id;
       session.user._id = token._id;
-      session.user._role = token._role;
+      session.user.role = token.role;
       return session;
     },
   },

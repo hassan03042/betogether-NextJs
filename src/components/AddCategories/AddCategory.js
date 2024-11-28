@@ -25,12 +25,12 @@ import {
 } from "@/components/ui/drawer";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { uploadImage } from "@/actions/upload";
+import { addCategory } from "@/actions/categories";
 
 export function AddCategories() {
   const [open, setOpen] = useState(false);
   const isDesktop = true;
-
-
 
   if (isDesktop) {
     return (
@@ -75,27 +75,43 @@ export function AddCategories() {
 }
 
 function ProfileForm({ className }) {
-  const handleAddCategory = (formData)=>{
+  const handleAddCategory = async (formData) => {
     console.log("formData", formData);
-    const file = formData.get('thumbnail');
-    console.log("formData", file);
-
-      }
+    let uploadLink = await uploadImage(formData);
+    const obj = {
+      title: formData.get("title"),
+      description: formData.get("description"),
+      thumbnail: uploadLink,
+    };
+    await addCategory(obj);
+  };
   return (
     <form
-    action={handleAddCategory}
-    className={cn("grid items-start gap-4", className)}>
+      action={handleAddCategory}
+      className={cn("grid items-start gap-4", className)}
+    >
       <div className="grid gap-2">
         <Label htmlFor="text">Title</Label>
-        <Input required type="text" name="text" id="text" placeholder="Sports" />
+        <Input
+          required
+          type="text"
+          name="text"
+          id="text"
+          placeholder="Sports"
+        />
       </div>
       <div className="grid gap-2">
         <Label htmlFor="description">Description</Label>
-        <Input required id="description" name="description" placeholder="About" />
+        <Input
+          required
+          id="description"
+          name="description"
+          placeholder="About"
+        />
       </div>
       <div className="grid gap-2">
         <Label htmlFor="thumbnail">Thumbnail</Label>
-        <Input name="thumbnail" required type="file"/>
+        <Input name="thumbnail" required type="file" />
       </div>
       <Button type="submit">Save changes</Button>
     </form>

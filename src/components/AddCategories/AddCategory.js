@@ -83,6 +83,8 @@ function ProfileForm({ className }) {
       description: formData.get("description"),
       thumbnail: uploadLink,
     };
+    console.log("obj", obj);
+
     await addCategory(obj);
   };
   return (
@@ -95,7 +97,7 @@ function ProfileForm({ className }) {
         <Input
           required
           type="text"
-          name="text"
+          name="title"
           id="text"
           placeholder="Sports"
         />

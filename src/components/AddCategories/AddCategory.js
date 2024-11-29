@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 import { cn } from "@/lib/utils";
 // import { useMediaQuery } from "@/hooks/use-media-query"
@@ -75,8 +76,13 @@ export function AddCategories() {
 }
 
 function ProfileForm({ className }) {
+  const [loading, setLoading] = useState(false);
+
+  const formRef = useRef();
+  const { toast } = useToast();
   const handleAddCategory = async (formData) => {
     console.log("formData", formData);
+    setLoading(true);
     let uploadLink = await uploadImage(formData);
     const obj = {
       title: formData.get("title"),
@@ -86,9 +92,15 @@ function ProfileForm({ className }) {
     console.log("obj", obj);
 
     await addCategory(obj);
+    toast({
+      title: "Category Added Successfully",
+    });
+    formRef?.current?.reset();
+    setLoading(false);
   };
   return (
     <form
+      ref={formRef}
       action={handleAddCategory}
       className={cn("grid items-start gap-4", className)}
     >
@@ -115,7 +127,9 @@ function ProfileForm({ className }) {
         <Label htmlFor="thumbnail">Thumbnail</Label>
         <Input name="thumbnail" required type="file" />
       </div>
-      <Button type="submit">Save changes</Button>
+      <Button disabled={loading} type="submit">
+        {loading ? "Loading..." : "Add Category"}
+      </Button>
     </form>
   );
 }

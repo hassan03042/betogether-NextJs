@@ -11,39 +11,16 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { AddCategories } from "@/components/AddCategories/AddCategory";
+import { getCategories } from "@/actions/categories";
 
-const categories = [
-  {
-    title: "Indoor Sports",
-    thumbnail:
-      "https://png.pngtree.com/thumb_back/fh260/background/20220402/pngtree-sport-equipment-and-ballsvivid-colorful-theme-activity-game-indoor-photo-image_16886778.jpg",
-    description: "All Your Indoor Sports Events.",
-  },
-
-  {
-    title: "Atheletes",
-    thumbnail:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQS0RCyxMVF-GFdlxvJk9qSaGyHoJFs9QsAMw&s",
-    description: "All Your Atheletes Events.",
-  },
-
-  {
-    title: "Birthday",
-    thumbnail:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSguHLIyJFdOaR7HSxVuUnWfHP-zaz_WmXO9Q&s",
-    description: "All Your Birthday Events.",
-  },
-];
-
-export default function Category() {
+export default async function Category() {
+  const categories = await getCategories();
   return (
     <div className="min-h-screen container mx-auto">
       <div className="flex justify-between items-center my-4">
-      <h1 className="font-bold text-xl">Category</h1>
+        <h1 className="font-bold text-xl">Category</h1>
         <AddCategories />
-
       </div>
-
 
       <Table>
         <TableCaption>A list of your categories.</TableCaption>
@@ -55,7 +32,7 @@ export default function Category() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {categories.map((categories) => (
+          {categories?.categories?.map((categories) => (
             <TableRow key={categories.title}>
               <TableCell className="text-right">
                 <Image
@@ -66,9 +43,7 @@ export default function Category() {
                   className="rounded-md"
                 />
               </TableCell>
-              <TableCell className="font-medium">
-                {categories.title}
-              </TableCell>
+              <TableCell className="font-medium">{categories.title}</TableCell>
               <TableCell className="font-medium">
                 {categories.description}
               </TableCell>

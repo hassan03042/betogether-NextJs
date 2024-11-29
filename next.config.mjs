@@ -9,6 +9,7 @@ const nextConfig = {
             {hostname : "marketplace.canva.com"}, 
             {hostname : "encrypted-tbn0.gstatic.com"}, 
             {hostname : "png.pngtree.com"}, 
+            {hostname : "res.cloudinary.com"}, 
         ]
     }
 };

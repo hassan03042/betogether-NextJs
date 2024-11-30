@@ -38,9 +38,7 @@ import { addSubCategory } from "@/actions/subcategories";
 
 export function AddSubCategories({ categories }) {
   const [open, setOpen] = useState(false);
-  const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 768; // Ensure client-side rendering for `isDesktop`
-
-  if (!isDesktop) return null;
+  const isDesktop = true;
 
   if (isDesktop) {
     return (
@@ -55,7 +53,7 @@ export function AddSubCategories({ categories }) {
               Make changes to your profile here. Click save when done.
             </DialogDescription>
           </DialogHeader>
-          <ProfileForm onClose={() => setOpen(false)} categories={categories} />
+          <ProfileForm onClose={()=> setOpen(false)} categories={categories} />
         </DialogContent>
       </Dialog>
     );
@@ -89,7 +87,7 @@ function ProfileForm({ className, categories, onClose }) {
   const { toast } = useToast();
   const handleAddCategory = async (formData) => {
     console.log("formData", formData);
-    // setLoading(true);
+    setLoading(true);
     let uploadLink = await uploadImage(formData);
     const obj = {
       title: formData.get("title"),

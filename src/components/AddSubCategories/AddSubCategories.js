@@ -53,7 +53,7 @@ export function AddSubCategories({ categories }) {
               Make changes to your profile here. Click save when done.
             </DialogDescription>
           </DialogHeader>
-          <ProfileForm onClose={()=> setOpen(false)} categories={categories} />
+          <ProfileForm onClose={() => setOpen(false)} categories={categories} />
         </DialogContent>
       </Dialog>
     );
@@ -103,7 +103,7 @@ function ProfileForm({ className, categories, onClose }) {
     });
     formRef?.current?.reset();
     setLoading(false);
-    onClose()
+    onClose();
   };
   return (
     <form

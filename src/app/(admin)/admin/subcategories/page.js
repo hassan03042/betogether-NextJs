@@ -33,9 +33,9 @@ import CategoryDropdown from "@/components/CategoryDropdown/CategoryDropdown";
 
 // ];
 
-export default async function SubCategories({searchParams}) {
+export default async function SubCategories({ searchParams }) {
   console.log("searchParams", searchParams);
-  
+
   const subcategories = await getSubCategories(searchParams?.category);
   const categories = (await getCategories()).categories;
   return (
@@ -44,8 +44,7 @@ export default async function SubCategories({searchParams}) {
         <h1 className="font-bold text-xl">Sub Categories</h1>
         <div className="flex gap-4">
           <CategoryDropdown categories={categories} />
-        <AddSubCategories categories={categories} />
-
+          <AddSubCategories categories={categories} />
         </div>
       </div>
 

@@ -11,34 +11,43 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { AddSubCategories } from "@/components/AddSubCategories/AddSubCategories";
+import { getSubCategories } from "@/actions/subcategories";
+import { getCategories } from "@/actions/categories";
+import CategoryDropdown from "@/components/CategoryDropdown/CategoryDropdown";
 
-const subCategories = [
-  {
-    title: "Table Tennis",
-    category: "Indoor Sports",
-    thumbnail:
-      "https://png.pngtree.com/thumb_back/fh260/background/20220402/pngtree-sport-equipment-and-ballsvivid-colorful-theme-activity-game-indoor-photo-image_16886778.jpg",
-    description: "All Your Indoor Sports Events.",
-  },
-  {
-    title: "Snooker",
-    category: "Indoor Sports",
-    thumbnail:
-      "https://png.pngtree.com/thumb_back/fh260/background/20220402/pngtree-sport-equipment-and-ballsvivid-colorful-theme-activity-game-indoor-photo-image_16886778.jpg",
-    description: "All Your Indoor Sports Events.",
-  },
+// const subCategories = [
+//   {
+//     title: "Table Tennis",
+//     category: "Indoor Sports",
+//     thumbnail:
+//       "https://png.pngtree.com/thumb_back/fh260/background/20220402/pngtree-sport-equipment-and-ballsvivid-colorful-theme-activity-game-indoor-photo-image_16886778.jpg",
+//     description: "All Your Indoor Sports Events.",
+//   },
+//   {
+//     title: "Snooker",
+//     category: "Indoor Sports",
+//     thumbnail:
+//       "https://png.pngtree.com/thumb_back/fh260/background/20220402/pngtree-sport-equipment-and-ballsvivid-colorful-theme-activity-game-indoor-photo-image_16886778.jpg",
+//     description: "All Your Indoor Sports Events.",
+//   },
 
-];
+// ];
 
-export default function Category() {
+export default async function SubCategories({searchParams}) {
+  console.log("searchParams", searchParams);
+  
+  const subcategories = await getSubCategories(searchParams?.category);
+  const categories = (await getCategories()).categories;
   return (
     <div className="min-h-screen container mx-auto">
       <div className="flex justify-between items-center my-4">
         <h1 className="font-bold text-xl">Sub Categories</h1>
-        <AddSubCategories />
+        <div className="flex gap-4">
+          <CategoryDropdown categories={categories} />
+        <AddSubCategories categories={categories} />
 
+        </div>
       </div>
-
 
       <Table>
         <TableCaption>A list of your subcategories.</TableCaption>
@@ -51,11 +60,11 @@ export default function Category() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {subCategories.map((categories) => (
-            <TableRow key={categories.title}>
+          {subcategories?.SubCategories?.map((subCat) => (
+            <TableRow key={subCat.title}>
               <TableCell className="text-right">
                 <Image
-                  src={categories.thumbnail}
+                  src={subCat.thumbnail}
                   style={{ objectFit: "cover" }}
                   height={60}
                   width={60}
@@ -63,13 +72,11 @@ export default function Category() {
                 />
               </TableCell>
               <TableCell className="font-medium">
-                {categories.category}
+                {subCat.category?.title}
               </TableCell>
+              <TableCell className="font-medium">{subCat.title}</TableCell>
               <TableCell className="font-medium">
-                {categories.title}
-              </TableCell>
-              <TableCell className="font-medium">
-                {categories.description}
+                {subCat.description}
               </TableCell>
             </TableRow>
           ))}

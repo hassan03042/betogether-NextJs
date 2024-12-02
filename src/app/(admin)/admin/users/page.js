@@ -9,6 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { getUsers } from "@/actions/users";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const users = [
   {
@@ -42,9 +43,9 @@ export default async function Users() {
   const users = await getUsers();
   return (
     <div className="min-h-screen container mx-auto">
-       <div className="flex justify-between items-center my-4">
-       <h1 className="font-bold text-xl">Users</h1>
-       </div>
+      <div className="flex justify-between items-center my-4">
+        <h1 className="font-bold text-xl">Users</h1>
+      </div>
       <Table>
         <TableCaption>A list of your recent users.</TableCaption>
         <TableHeader>
@@ -60,12 +61,21 @@ export default async function Users() {
           {users?.users?.map((users) => (
             <TableRow key={users._id}>
               <TableCell className="text-right">
-                <Image
+                <Avatar>
+                  <AvatarImage
+                    height={40}
+                    width={40}
+                    src={users.profileImage}
+                  />
+                  <AvatarFallback>-</AvatarFallback>
+                </Avatar>
+
+                {/* <Image
                   src={users.profileImage}
                   height={40}
                   width={40}
                   className="rounded-md"
-                />
+                /> */}
               </TableCell>
               <TableCell className="font-medium">{users.fullname}</TableCell>
               <TableCell>{users.email}</TableCell>

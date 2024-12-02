@@ -8,6 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { getUsers } from "@/actions/users";
 
 const users = [
   {
@@ -37,7 +38,8 @@ const users = [
   },
 ];
 
-export default function Users() {
+export default async function Users() {
+  const users = await getUsers();
   return (
     <div className="min-h-screen container mx-auto">
        <div className="flex justify-between items-center my-4">
@@ -55,8 +57,8 @@ export default function Users() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {users.map((users) => (
-            <TableRow key={users.fullname}>
+          {users?.users?.map((users) => (
+            <TableRow key={users._id}>
               <TableCell className="text-right">
                 <Image
                   src={users.profileImage}

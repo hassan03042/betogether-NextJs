@@ -11,6 +11,7 @@ const nextConfig = {
             {hostname : "png.pngtree.com"}, 
             {hostname : "res.cloudinary.com"}, 
             {hostname : "lh3.googleusercontent.com"}, 
+            {hostname : "www.simplilearn.com"}, 
         ]
     }
 };

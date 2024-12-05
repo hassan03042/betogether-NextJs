@@ -8,34 +8,18 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
-const events = [
-  {
-    title: "Wedding Event",
-    description: "Wedding Of H & ...",
-    location: "Karachi",
-    thumbnail:
-      "https://www.southernliving.com/thmb/_DTHAquZBLEHKLIgPi_C3fFIhNo=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-929904308-aeeb687413714dacace50062cece530a.jpg",
-    date: new Date().toLocaleDateString() ,
-  },
-
-  {
-    title: "Birthday Party",
-    description: "Birthday Of Baby Girl",
-    location: "Karachi",
-    thumbnail:
-      "https://marketplace.canva.com/EAFYJKGkaTQ/1/0/1600w/canva-white-and-gold-modern-greeting-happy-birthday-card-MAo89x0go4c.jpg",
-    date: new Date().toLocaleDateString() ,
-  },
+import { getEvents } from "@/actions/events";
+import AddEventForm from "@/components/AddEventSheet/AddEventSheet";
 
 
-];
 
-export default function Events() {
+export default async function Events() {
+  const events = await getEvents();
   return (
     <div className="min-h-screen container mx-auto">
        <div className="flex justify-between items-center my-4">
        <h1 className="font-bold text-xl">Events</h1>
+       <AddEventForm />
        </div>
       <Table>
         <TableCaption>A list of your recent events.</TableCaption>
@@ -49,8 +33,8 @@ export default function Events() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {events.map((events) => (
-            <TableRow key={events.title}>
+          {events?.events?.map((events) => (
+            <TableRow key={events._id}>
               <TableCell className="text-right">
                 <Image
                   src={events.thumbnail}
@@ -62,8 +46,8 @@ export default function Events() {
               </TableCell>
               <TableCell className="font-medium">{events.title}</TableCell>
               <TableCell>{events.description}</TableCell>
-              <TableCell>{events.location}</TableCell>
-              <TableCell>{events.date}</TableCell>
+              <TableCell>{events.address}</TableCell>
+              <TableCell>{events.startDate}</TableCell>
             </TableRow>
           ))}
         </TableBody>

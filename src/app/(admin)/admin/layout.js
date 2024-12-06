@@ -12,8 +12,7 @@ export default async function Layout({ children }) {
   
 
   return (
-    <html>
-      <body>
+    <div>
         <Tabs defaultValue="dashboard" className="w-full">
           <TabsList className="w-full">
             <Link href={"/admin/dashboard"}>
@@ -38,7 +37,6 @@ export default async function Layout({ children }) {
           <TabsContent value="category">{children}</TabsContent>
           <TabsContent value="subcategories">{children}</TabsContent>
         </Tabs>
-      </body>
-    </html>
+    </div>
   );
 }

@@ -41,6 +41,7 @@ const users = [
 
 export default async function Users() {
   const users = await getUsers();
+  console.log("users", users)
   return (
     <div className="min-h-screen container mx-auto">
       <div className="flex justify-between items-center my-4">
@@ -58,18 +59,13 @@ export default async function Users() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {users?.users?.map((users) => (
-            <TableRow key={users._id}>
+          {users?.users?.map((user) => (
+            <TableRow key={user._id}>
               <TableCell className="text-right">
                 <Avatar>
-                  <AvatarImage
-                    height={40}
-                    width={40}
-                    src={users.profileImage}
-                  />
+                  <AvatarImage height={40} width={40} src={user.profileImg} />
                   <AvatarFallback>-</AvatarFallback>
                 </Avatar>
-
                 {/* <Image
                   src={users.profileImage}
                   height={40}
@@ -77,10 +73,10 @@ export default async function Users() {
                   className="rounded-md"
                 /> */}
               </TableCell>
-              <TableCell className="font-medium">{users.fullname}</TableCell>
-              <TableCell>{users.email}</TableCell>
-              <TableCell>{users.location}</TableCell>
-              <TableCell>{users.events}</TableCell>
+              <TableCell className="font-medium">{user.fullname}</TableCell>
+              <TableCell>{user.email}</TableCell>
+              <TableCell>{user.location}</TableCell>
+              <TableCell>{user.events}</TableCell>
             </TableRow>
           ))}
         </TableBody>

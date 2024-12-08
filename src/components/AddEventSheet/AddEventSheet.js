@@ -13,8 +13,8 @@ import {
 } from "@/components/ui/select";
 import { Autocomplete } from "@react-google-maps/api";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import {
   Sheet,
@@ -31,19 +31,20 @@ import { useToast } from "@/hooks/use-toast";
 const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAP_API_KEY;
 
 const schema = z.object({
-    title: z.string().min(1, "Title is required"),
-    description: z.string().min(1, "Description is required"),
-    startTime: z.string().min(1, "Start time is required"),
-    endTime: z.string().min(1, "End time is required"),
-    thumbnail: z.any().optional(), // Allow any type here and validate manually
-    startDate: z.string().min(1, "Start date is required"),
-    endDate: z.string().min(1, "End date is required"),
-    category: z.string(),
-    lat: z.string(),
-    long: z.string(),
-    address: z.string().min(1, "Address is required"),
-  });
-  
+  title: z.string().min(1, "Title is required"),
+  description: z.string().min(1, "Description is required"),
+  startTime: z.string().min(1, "Start time is required"),
+  endTime: z.string().min(1, "End time is required"),
+  thumbnail: z.instanceof(FileList).optional(),
+  startDate: z.string().min(1, "Start date is required"),
+  endDate: z.string().min(1, "End date is required"),
+  category: z.string(),
+  lat: z.string(),
+  long: z.string(),
+  address: z.string().min(1, "Address is required"),
+  // Note: createdBy, category, subcategory, and going are not included in the form
+  // as they would typically be handled on the server side or through a separate interface
+});
 
 export default function AddEventForm({ session, categories }) {
   const { toast } = useToast();
@@ -266,4 +267,4 @@ export default function AddEventForm({ session, categories }) {
       </SheetContent>
     </Sheet>
   );
-}   
+}

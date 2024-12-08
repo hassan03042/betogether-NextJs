@@ -1,4 +1,5 @@
-import Image from "next/image";
+import { getEvents } from "@/actions/events";
+import AddEventForm from "@/components/AddEventSheet/AddEventSheet";
 import {
   Table,
   TableBody,
@@ -8,19 +9,20 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { getEvents } from "@/actions/events";
-import AddEventForm from "@/components/AddEventSheet/AddEventSheet";
-
-
+import Image from "next/image";
+import { auth } from "../../../../../auth";
+import { getCategories } from "@/actions/categories";
 
 export default async function Events() {
   const events = await getEvents();
+  const { categories } = await getCategories();
+  const session = await auth();
   return (
-    <div className="min-h-screen container mx-auto">
-       <div className="flex justify-between items-center my-4">
-       <h1 className="font-bold text-xl">Events</h1>
-       <AddEventForm />
-       </div>
+    <div className="min-h-screen mx-10">
+      <div className="flex justify-between items-center my-4">
+        <h1 className="font-bold text-xl">Events</h1>
+        <AddEventForm session={session} categories={categories} />
+      </div>
       <Table>
         <TableCaption>A list of your recent events.</TableCaption>
         <TableHeader>
@@ -33,21 +35,20 @@ export default async function Events() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {events?.events?.map((events) => (
-            <TableRow key={events._id}>
+          {events?.events?.map((event) => (
+            <TableRow key={event._id}>
               <TableCell className="text-right">
                 <Image
-                  src={events.thumbnail}
-                  style={{objectFit:"cover"}}
-                  height={60}
-                  width={60}
-                  className="rounded-md"
+                  src={event.thumbnail}
+                  style={{ objectFit: "cover" }}
+                  height={40}
+                  width={40}
                 />
               </TableCell>
-              <TableCell className="font-medium">{events.title}</TableCell>
-              <TableCell>{events.description}</TableCell>
-              <TableCell>{events.address}</TableCell>
-              <TableCell>{events.startDate}</TableCell>
+              <TableCell className="font-medium">{event.title}</TableCell>
+              <TableCell>{event.description}</TableCell>
+              <TableCell>{event.address}</TableCell>
+              <TableCell>{event.startDate}</TableCell>
             </TableRow>
           ))}
         </TableBody>

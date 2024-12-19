@@ -1,29 +1,41 @@
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
-import { auth, signOut } from "../../auth";
-import Link from "next/link";
+import { Input } from "@/components/ui/input";
+import UpcomingEvents from "@/components/UpcomingEvents/UpcomingEvents";
+import { auth } from "../../auth";
+import { getEvents } from "@/actions/events";
+import { getCategories } from "@/actions/categories";
 
-export default async function Home() {
+export default async function HomePage({ searchParams }) {
+  console.log("searchparams=>", searchParams);
+  const { category } = searchParams;
   const session = await auth();
+  const { events } = await getEvents(category);
+  const { categories } = await getCategories();
   return (
-    <div className="min-h-screen">
-     <h1 className="font-bold text-3xl p-20 text-center">Find Your Friend</h1>
+    <div className="min-h-screen bg-background">
+      <header className="bg-primary text-primary-foreground py-12">
+        <div className="container mx-auto text-center">
+          <h1 className="text-4xl font-bold mb-4">Find Your Friend</h1>
+          <p className="text-xl mb-8">
+            Discover events and make new connections
+          </p>
+          <div className="flex justify-center">
+            <Input
+              className="w-full max-w-sm mr-2"
+              placeholder="Search events..."
+              type="search"
+            />
+            <Button>Search</Button>
+          </div>
+        </div>
+      </header>
 
-{
-    session?
-     <form
-      action={async () => {
-        "use server"
-        await signOut()
-      }}
-    >
-      <Button type="submit">Sign Out</Button>
-    </form>:
-    <Link href={'/signin'}>
-    <Button>Sign In</Button>
-    </Link>
-}
-
+      <UpcomingEvents
+        chosenCategory={category}
+        events={events}
+        session={session}
+        categories={categories}
+      />
     </div>
   );
 }

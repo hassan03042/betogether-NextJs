@@ -6,7 +6,7 @@ export async function GET(request) {
   const categories = await CategoryModal.find();
   return Response.json(
     {
-      msg: "Category Fetched Successfully",
+      msg: "Categories Fetched Successfully",
       categories,
     },
     { status: 200 }
@@ -15,15 +15,13 @@ export async function GET(request) {
 
 export async function POST(request) {
   await connectDB();
-  console.log(connectDB);
-  
   const obj = await request.json();
   let newCategory = new CategoryModal(obj);
   await newCategory.save();
 
   return Response.json(
     {
-      msg: "Category Added Successfully",
+      msg: "Category Added Successfully ",
       category: newCategory,
     },
     { status: 201 }

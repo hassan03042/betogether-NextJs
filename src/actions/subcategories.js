@@ -8,9 +8,8 @@ export const addSubCategory = async (obj) => {
     body: JSON.stringify(obj),
   });
   if (added.ok) {
-    console.log("Subcategories Added Successfully");
-
-    revalidatePath("/admin/categories");
+    console.log("Subcategories added successfully");
+    revalidatePath("/admin/subcategories");
   }
 };
 
@@ -23,6 +22,6 @@ export const getSubCategories = async (category) => {
   }
   let subcategories = await fetch(url);
   subcategories = await subcategories.json();
-  console.log("Subcategories Fetched Successfully");
+  console.log("Subcategories Fetched successfully");
   return subcategories;
 };

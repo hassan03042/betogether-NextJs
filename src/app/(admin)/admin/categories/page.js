@@ -1,6 +1,3 @@
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
-
 import {
   Table,
   TableBody,
@@ -10,16 +7,20 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { AddCategories } from "@/components/AddCategories/AddCategory";
+import { Button } from "@/components/ui/button";
+
+import Image from "next/image";
+import { AddCategory } from "@/components/AddCategory/AddCategory";
 import { getCategories } from "@/actions/categories";
 
-export default async function Category() {
+export default async function Categories() {
   const categories = await getCategories();
+  console.log("categories=>", categories);
   return (
-    <div className="min-h-screen container mx-auto">
+    <div className="min-h-screen mx-10 px-1">
       <div className="flex justify-between items-center my-4">
-        <h1 className="font-bold text-xl">Category</h1>
-        <AddCategories />
+        <h1 className="font-bold text-xl">Categories</h1>
+        <AddCategory />
       </div>
 
       <Table>
@@ -32,20 +33,19 @@ export default async function Category() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {categories?.categories?.map((categories) => (
-            <TableRow key={categories.title}>
+          {categories?.categories?.map((category) => (
+            <TableRow key={category.title}>
               <TableCell className="text-right">
-                <Image
-                  src={categories.thumbnail}
+                <img
+                  src={category.thumbnail}
                   style={{ objectFit: "cover" }}
-                  height={60}
-                  width={60}
-                  className="rounded-md"
+                  height={40}
+                  width={40}
                 />
               </TableCell>
-              <TableCell className="font-medium">{categories.title}</TableCell>
+              <TableCell className="font-medium">{category.title}</TableCell>
               <TableCell className="font-medium">
-                {categories.description}
+                {category.description}
               </TableCell>
             </TableRow>
           ))}

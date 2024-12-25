@@ -8,17 +8,15 @@ export const addCategory = async (obj) => {
     body: JSON.stringify(obj),
   });
   if (added.ok) {
-    console.log("Category Added Successfully");
-
-    revalidatePath("/admin/category");
+    console.log("Category added successfully");
+    revalidatePath("/admin/categories");
   }
 };
 
 export const getCategories = async () => {
   let categories = await fetch(`${process.env.BASE_URL}api/categories`);
   categories = await categories.json();
-  console.log("Category Fetched Successfully");
+  console.log("Category Fetched successfully");
   return categories;
-
-  revalidatePath("/admin/category");
+  revalidatePath("/admin/categories");
 };

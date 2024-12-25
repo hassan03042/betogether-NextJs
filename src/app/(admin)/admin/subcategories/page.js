@@ -1,6 +1,5 @@
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
-
+import { getEvents } from "@/actions/events";
+import AddEventForm from "@/components/AddEventSheet/AddEventSheet";
 import {
   Table,
   TableBody,
@@ -10,73 +9,46 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { AddSubCategories } from "@/components/AddSubCategories/AddSubCategories";
-import { getSubCategories } from "@/actions/subcategories";
+import Image from "next/image";
+import { auth } from "../../../../../auth";
 import { getCategories } from "@/actions/categories";
-import CategoryDropdown from "@/components/CategoryDropdown/CategoryDropdown";
 
-// const subCategories = [
-//   {
-//     title: "Table Tennis",
-//     category: "Indoor Sports",
-//     thumbnail:
-//       "https://png.pngtree.com/thumb_back/fh260/background/20220402/pngtree-sport-equipment-and-ballsvivid-colorful-theme-activity-game-indoor-photo-image_16886778.jpg",
-//     description: "All Your Indoor Sports Events.",
-//   },
-//   {
-//     title: "Snooker",
-//     category: "Indoor Sports",
-//     thumbnail:
-//       "https://png.pngtree.com/thumb_back/fh260/background/20220402/pngtree-sport-equipment-and-ballsvivid-colorful-theme-activity-game-indoor-photo-image_16886778.jpg",
-//     description: "All Your Indoor Sports Events.",
-//   },
-
-// ];
-
-export default async function SubCategories({ searchParams }) {
-  console.log("searchParams", searchParams);
-
-  const subcategories = await getSubCategories(searchParams?.category);
-  const categories = (await getCategories()).categories;
+export default async function Events() {
+  const events = await getEvents();
+  const { categories } = await getCategories();
+  const session = await auth();
   return (
-    <div className="min-h-screen container mx-auto">
+    <div className="min-h-screen mx-10">
       <div className="flex justify-between items-center my-4">
-        <h1 className="font-bold text-xl">Sub Categories</h1>
-        <div className="flex gap-4">
-          <CategoryDropdown categories={categories} />
-          <AddSubCategories categories={categories} />
-        </div>
+        <h1 className="font-bold text-xl">Events</h1>
+        <AddEventForm session={session} categories={categories} />
       </div>
-
       <Table>
-        <TableCaption>A list of your subcategories.</TableCaption>
+        <TableCaption>A list of your recent events.</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[100px]">Thumbnail</TableHead>
-            <TableHead>Category</TableHead>
-            <TableHead>Title</TableHead>
+            <TableHead>Thumbnail</TableHead>
+            <TableHead className="w-[100px]">Title</TableHead>
             <TableHead>Description</TableHead>
+            <TableHead>Location</TableHead>
+            <TableHead className="text-right">Date</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {subcategories?.SubCategories?.map((subCat) => (
-            <TableRow key={subCat.title}>
+          {events?.events?.map((event) => (
+            <TableRow key={event._id}>
               <TableCell className="text-right">
                 <Image
-                  src={subCat.thumbnail}
+                  src={event.thumbnail}
                   style={{ objectFit: "cover" }}
-                  height={60}
-                  width={60}
-                  className="rounded-md"
+                  height={40}
+                  width={40}
                 />
               </TableCell>
-              <TableCell className="font-medium">
-                {subCat.category?.title}
-              </TableCell>
-              <TableCell className="font-medium">{subCat.title}</TableCell>
-              <TableCell className="font-medium">
-                {subCat.description}
-              </TableCell>
+              <TableCell className="font-medium">{event.title}</TableCell>
+              <TableCell>{event.description}</TableCell>
+              <TableCell>{event.address}</TableCell>
+              <TableCell>{event.startDate}</TableCell>
             </TableRow>
           ))}
         </TableBody>
